@@ -68,7 +68,7 @@ class _ProdukDetailState extends State<ProdukDetail> {
               style: const TextStyle(fontSize: 18.0),
             ),
             Text(
-              "Harga : ${widget.produk!.hargaProduk.toString()}",
+              "Harga : ${widget.produk!.hargaProduk != null ? widget.produk!.hargaProduk.toString() : 'Harga tidak tersedia'}",
               style: const TextStyle(fontSize: 18.0),
             ),
             _tombolHapusEdit()

@@ -5,7 +5,7 @@ import 'package:ui_uts_app/ui/produk_page.dart';
 import 'package:ui_uts_app/widget/warning_dialog.dart';
 
 class ProdukForm extends StatefulWidget {
-  Produk? produk;
+  final Produk? produk;
 
   ProdukForm({Key? key, this.produk}) : super(key: key);
 
@@ -36,8 +36,9 @@ class _ProdukFormState extends State<ProdukForm> {
         tombolSubmit = "UBAH";
         _kodeProdukTextboxController.text = widget.produk!.kodeProduk!;
         _namaProdukTextboxController.text = widget.produk!.namaProduk!;
-        _hargaProdukTextboxController.text =
-            widget.produk!.hargaProduk.toString();
+        _hargaProdukTextboxController.text = widget.produk!.hargaProduk != null
+            ? widget.produk!.hargaProduk.toString()
+            : 'Harga tidak tersedia';
       });
     } else {
       judul = "TAMBAH PRODUK";
@@ -68,7 +69,7 @@ class _ProdukFormState extends State<ProdukForm> {
     );
   }
 
-//Membuat Textbox Kode Produk
+// Membuat Textbox Kode Produk
   Widget _kodeProdukTextField() {
     return TextFormField(
       decoration: const InputDecoration(labelText: "Kode Produk"),
@@ -83,7 +84,7 @@ class _ProdukFormState extends State<ProdukForm> {
     );
   }
 
-//Membuat Textbox Nama Produk
+// Membuat Textbox Nama Produk
   Widget _namaProdukTextField() {
     return TextFormField(
       decoration: const InputDecoration(labelText: "Nama Produk"),
@@ -98,7 +99,7 @@ class _ProdukFormState extends State<ProdukForm> {
     );
   }
 
-//Membuat Textbox Harga Produk
+// Membuat Textbox Harga Produk
   Widget _hargaProdukTextField() {
     return TextFormField(
       decoration: const InputDecoration(labelText: "Harga"),
@@ -107,13 +108,15 @@ class _ProdukFormState extends State<ProdukForm> {
       validator: (value) {
         if (value!.isEmpty) {
           return "Harga harus diisi";
+        } else if (int.tryParse(value) == null) {
+          return "Harga harus berupa angka";
         }
         return null;
       },
     );
   }
 
-//Membuat Tombol Simpan/Ubah
+// Membuat Tombol Simpan/Ubah
   Widget _buttonSubmit() {
     return OutlinedButton(
         child: Text(tombolSubmit),
@@ -122,10 +125,10 @@ class _ProdukFormState extends State<ProdukForm> {
           if (validate) {
             if (!_isLoading) {
               if (widget.produk != null) {
-//kondisi update produk
+// kondisi update produk
                 ubah();
               } else {
-//kondisi tambah produk
+// kondisi tambah produk
                 simpan();
               }
             }

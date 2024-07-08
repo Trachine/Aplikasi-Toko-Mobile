@@ -47,7 +47,7 @@ class _ProdukPageState extends State<ProdukPage> {
           ],
         ),
       ),
-      body: FutureBuilder<List>(
+      body: FutureBuilder<List<Produk>>(
         future: ProdukBloc.getProduks(),
         builder: (context, snapshot) {
           if (snapshot.hasError) print(snapshot.error);
@@ -65,7 +65,7 @@ class _ProdukPageState extends State<ProdukPage> {
 }
 
 class ListProduk extends StatelessWidget {
-  final List? list;
+  final List<Produk>? list;
 
   const ListProduk({Key? key, this.list}) : super(key: key);
 
@@ -100,7 +100,9 @@ class ItemProduk extends StatelessWidget {
       child: Card(
         child: ListTile(
           title: Text(produk.namaProduk!),
-          subtitle: Text(produk.hargaProduk.toString()),
+          subtitle: Text(produk.hargaProduk != null
+              ? produk.hargaProduk.toString()
+              : 'Harga tidak tersedia'),
         ),
       ),
     );
